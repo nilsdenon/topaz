@@ -1,5 +1,5 @@
 export const colors = {
-  gray: {
+  primerGray: {
     50: "#FAFBFC",
     100: "#F6F8FA",
     200: "#E1E4E8",
@@ -11,7 +11,7 @@ export const colors = {
     800: "#2F363D",
     900: "#24292E",
   },
-  blue: {
+  primerBlue: {
     50: "#F1F8FF",
     100: "#DBEDFF",
     200: "#C8E1FF",
@@ -23,7 +23,7 @@ export const colors = {
     800: "#032F62",
     900: "#05264C",
   },
-  green: {
+  primerGreen: {
     50: "#F0FFF4",
     100: "#DCFFE4",
     200: "#BEF5CB",
@@ -35,7 +35,7 @@ export const colors = {
     800: "#165C26",
     900: "#144620",
   },
-  yellow: {
+  primerYellow: {
     50: "#FFFDEF",
     100: "#FFFBDD",
     200: "#FFF5B1",
@@ -47,7 +47,7 @@ export const colors = {
     800: "#B08800",
     900: "#735C0F",
   },
-  orange: {
+  primerOrange: {
     50: "#FFF8F2",
     100: "#FFEBDA",
     200: "#FFD1AC",
@@ -59,7 +59,7 @@ export const colors = {
     800: "#C24E00",
     900: "#A04100",
   },
-  red: {
+  primerRed: {
     50: "#FFEEF0",
     100: "#FFDCE0",
     200: "#FDAEB7",
@@ -71,7 +71,7 @@ export const colors = {
     800: "#9E1C23",
     900: "#86181D",
   },
-  pink: {
+  primerPink: {
     50: "#FFEEF8",
     100: "#FEDBF0",
     200: "#F9B3DD",
@@ -83,7 +83,7 @@ export const colors = {
     800: "#99306F",
     900: "#6D224F",
   },
-  purple: {
+  primerPurple: {
     50: "#F5F0FF",
     100: "#E6DCFD",
     200: "#D1BCF9",
@@ -96,3 +96,52 @@ export const colors = {
     900: "#29134E",
   },
 };
+
+const availableColorTints = [
+  "50",
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+];
+
+const tokenToColorMap = {
+  primary: "blue",
+  accent: "teal",
+  success: "green",
+  warning: "orange",
+  error: "red",
+  neutral: "gray",
+  info: "purple",
+  rose: "pink",
+  amarillo: "yellow",
+  "primer-primary": "primerBlue",
+  "primer-accent": "primerTeal",
+  "primer-success": "primerGreen",
+  "primer-warning": "primerOrange",
+  "primer-error": "primerRed",
+  "primer-neutral": "primerGray",
+  "primer-info": "primerPurple",
+  "primer-rose": "primerPink",
+  "primer-amarillo": "primerYellow",
+};
+
+export const colorTokens = Object.entries(tokenToColorMap).reduce(
+  (acc, [token, color]) => {
+    availableColorTints.forEach((tint, index) => {
+      acc[`${token}.${tint}`] = {
+        default: `${color}.${tint}`,
+        _dark: `${color}.${
+          availableColorTints[availableColorTints.length - 1 - index]
+        }`,
+      };
+    });
+    return acc;
+  },
+  {} as Record<string, { default: string; _dark: string }>
+);

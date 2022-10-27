@@ -1,6 +1,8 @@
+import { colorTokens } from "./colors";
+
 export const semanticTokens = {
   colors: {
-    error: "red.500",
+    ...colorTokens,
     primary: {
       default: "blue.500",
       _dark: "blue.400",

@@ -1,8 +1,12 @@
-import { Container, Heading } from "@chakra-ui/react";
-import type { NextPage } from "next";
+import { Container, Flex, Heading, Text } from "@chakra-ui/react";
+import { client } from "lib/helpers";
+import { GET_ALL_PAGES, GET_GENERAL_SETTINGS } from "lib/queries";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ data }: any) => {
+  console.log("first", data);
+  console.log("second", data.generalSettingsUrl);
   return (
     <>
       <Head>
@@ -11,8 +15,28 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Heading size={"4xl"}>Hello</Heading>
+      <Container>
+        <Text>test</Text>
+        <Text>{data.generalSettingsUrl}</Text>
+      </Container>
     </>
   );
 };
 
 export default Home;
+
+export const getStaticProps: GetStaticProps = async () => {
+  // Query the homepage data.
+  const { data } = await client.query({
+    query: GET_GENERAL_SETTINGS,
+    //variables: { slug: "homepage" },
+  });
+
+  // Pass data to the page via props.
+  return {
+    props: {
+      data,
+    },
+    revalidate: 60,
+  };
+};
