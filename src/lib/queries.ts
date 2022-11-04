@@ -87,6 +87,28 @@ export const GET_GENERAL_SETTINGS = gql`
   }
 `;
 
+export const GET_PRIMARY_MENU = gql`
+  query GetPrimaryMenu {
+    headerMenu: menus(where: { location: PRIMARY }) {
+      edges {
+        node {
+          id
+          menuItems {
+            edges {
+              node {
+                id
+                label
+                path
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 // export const GET_ALL_POSTS = gql`
 //   query AllPostsQuery {
 //     posts {

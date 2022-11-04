@@ -6,20 +6,23 @@ import {
   Link,
   Stack,
   Text,
-  useBreakpointValue,
   useColorMode,
   useColorModeValue,
   useMediaQuery,
 } from "@chakra-ui/react";
-import Logo from "components/Logo";
-import NextLink from "next/link";
-import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 
+import Logo from "components/Logo";
+import { motion } from "framer-motion";
+import NextLink from "next/link";
+
+import client from "lib/client";
+import type { GetStaticProps } from "next";
+import { GET_MENUS } from "queries/getMenus";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { FCC } from "types/react";
 import NavLink from "./NavLink";
 
-const Branding = () => {
+const Branding = (settings: string) => {
   const [isDesktop] = useMediaQuery("(min-width: 768px)");
   return (
     <Stack direction={"row"} alignItems="center">
@@ -40,11 +43,13 @@ const Branding = () => {
   );
 };
 
-type Props = {
+interface Props {
   items?: any;
-};
+}
 
 const Navigation = ({ items }: Props) => {
+  console.log("items", items);
+
   const { colorMode, toggleColorMode } = useColorMode();
   const bg = useColorModeValue("blackAlpha.100", "whiteAlpha.100");
 
@@ -58,11 +63,26 @@ const Navigation = ({ items }: Props) => {
       direction={"row"}
       alignItems="center"
     >
-      {items?.map((item: { url: any; label: any }, idx: number) => (
-        <NavLink key={idx} to={item.url} layoutId={item.label}>
-          {item.label}
-        </NavLink>
-      ))}
+      {items?.map(
+        (item: {
+          [x: string]: any;
+          path: any;
+          url: string;
+          label: any;
+          id: number;
+        }) => (
+          // <NavLink key={item.id} to={item?.path} layoutId={item.label}>
+          //   <a>{item?.label}</a>
+          // </NavLink>
+          <NavLink
+            key={item?.node?.id}
+            to={item?.node?.path}
+            layoutId={item?.node?.id}
+          >
+            <a>{item?.node?.label}</a>
+          </NavLink>
+        )
+      )}
 
       <IconButton
         onClick={toggleColorMode}
@@ -81,6 +101,8 @@ const Navigation = ({ items }: Props) => {
 };
 
 const Header: FCC = ({ items }: Props) => {
+  //console.log("dataFromHeader", data);
+
   return (
     <Flex
       as="header"
@@ -90,9 +112,26 @@ const Header: FCC = ({ items }: Props) => {
       minH={"40px"}
     >
       <Branding />
+
       <Navigation items={items} />
     </Flex>
   );
 };
 
 export default Header;
+
+// export const getStaticProps: GetStaticProps = async () => {
+//   // Query the homepage data.
+//   const { data } = await client.query({
+//     query: GET_MENUS,
+//     //variables: { slug: "homepage" },
+//   });
+
+//   // Pass data to the page via props.
+//   return {
+//     props: {
+//       data,
+//     },
+//     revalidate: 60,
+//   };
+// };

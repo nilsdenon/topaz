@@ -1,16 +1,5 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
 import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
-
-/**
- * The WordPress connector for Apollo Client.
- *
- * @see https://www.npmjs.com/package/apollo-client
- */
-export const client = new ApolloClient({
-  uri: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`,
-  cache: new InMemoryCache(),
-});
 
 /**
  * Sanitize comment content.

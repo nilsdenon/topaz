@@ -1,5 +1,1 @@
-import { IconButton } from "./IconButton";
-
-export const components = {
-  IconButton,
-};
+export const components = {};
