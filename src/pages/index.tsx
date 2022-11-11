@@ -1,18 +1,15 @@
-import { Container, Heading, Text } from "@chakra-ui/react";
-import NavBar from "components/NavBar/NavBar";
-import type { NextPage } from "next";
 import Head from "next/head";
 
-import { getPrimaryMenu, getLatestPosts } from "lib/api";
+import { getLatestPosts, getPrimaryMenu } from "lib/api";
 import {
+  JSXElementConstructor,
   Key,
   ReactElement,
-  JSXElementConstructor,
   ReactFragment,
   ReactPortal,
 } from "react";
 
-const Home = ({ latestPosts: { edges } }) => {
+const Home = () => {
   return (
     <>
       <div className="grid grid-cols-3 gap-4 p-5">
@@ -22,7 +19,7 @@ const Home = ({ latestPosts: { edges } }) => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        {edges.map(
+        {/* {edges.map(
           (post: {
             node: {
               id: Key | null | undefined;
@@ -57,7 +54,7 @@ const Home = ({ latestPosts: { edges } }) => {
               </div>
             </div>
           )
-        )}
+        )} */}
       </div>
     </>
   );
